@@ -4,7 +4,7 @@ class HelloKitty(pygame.sprite.Sprite):
     def __init__(self, grupo_de_desenho):
         super().__init__(grupo_de_desenho)
         self.image = pygame.image.load("Imagens/Personagem.png")
-        self.rect = pygame.Rect(50, 552, 72, 67)  # Posição inicial do personagem no chão (y = 552)
+        self.rect = pygame.Rect(50, 552, 67, 67)  # Posição inicial do personagem no chão (y = 552)
         
         # Variáveis de movimento
         self.pos_x = 50.0
@@ -15,7 +15,7 @@ class HelloKitty(pygame.sprite.Sprite):
         self.no_chao = True
         self.tempo_ultimo_pulo = 0
         self.intervalo_pulo = 500  # Intervalo de 1000ms entre pulos
-        self.velocidade = 0.5
+        self.velocidade = 0.3
 
     def mover(self, plataformas):
         keys = pygame.key.get_pressed()
