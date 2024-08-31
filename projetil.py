@@ -4,9 +4,8 @@ import math
 class Projetil(pygame.sprite.Sprite):
     def __init__(self, grupo_de_desenho, x_inicial, y_inicial, alvo):
         super().__init__(grupo_de_desenho)
-        self.image = pygame.Surface([10, 10])
-        self.image.fill((255, 255, 0))  # Cor amarela para o projétil
-        self.rect = pygame.Rect(x_inicial, y_inicial, 10, 10)
+        self.image = pygame.image.load("Imagens/tiro.png")
+        self.rect = pygame.Rect(x_inicial, y_inicial, 15, 15)
         self.velocidade = 1
 
         # Calcula a direção do projétil em relação ao alvo (Hello Kitty)
