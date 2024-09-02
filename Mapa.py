@@ -8,9 +8,9 @@ class Mapa(pygame.sprite.Sprite):
         self.__rect = pygame.Rect(0, 0, 1000, 700)
 
         # Criando as plataformas
-        self.plataforma_1 = Plataforma(180, 462, 500, 20)#DE CIMA
-        self.plataforma_2 = Plataforma(370, 334, 245, 20)#TIKTIK
-        self.plataforma_3 = Plataforma(792, 243, 110, 20)#MAIS ALTA
+        self.plataforma_1 = Plataforma(125, 462, 555, 20)#DE CIMA
+        self.plataforma_2 = Plataforma(335, 334, 255, 20)#TIKTIK x: 370, largura 245
+        self.plataforma_3 = Plataforma(745, 243, 145, 20)#MAIS ALTA x 792 largura tava 110
         self.plataforma_4 = Plataforma(0, 618, 1000, 20)#CHAO
         
         # Se necessário, armazene as plataformas em uma lista para facilitar o acesso

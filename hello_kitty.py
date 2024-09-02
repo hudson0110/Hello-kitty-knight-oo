@@ -4,7 +4,7 @@ class HelloKitty(pygame.sprite.Sprite):
     def __init__(self, grupo_de_desenho):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/Personagem.png")
-        self.__rect = pygame.Rect(50, 552, 67, 67)  # Posição inicial do personagem no chão (y = 552)
+        self.__rect = pygame.Rect(50, 552, 20, 67)  # Posição inicial do personagem no chão (y = 552)
         
         # Variáveis de movimento
         self.__pos_x = 50.0

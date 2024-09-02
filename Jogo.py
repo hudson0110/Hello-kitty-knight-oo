@@ -22,8 +22,8 @@ class Jogo:
         # Criação dos objetos
         self.mapa = Mapa(self.grupo_de_desenho)
         self.personagem = HelloKitty(self.grupo_de_desenho)
-        self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429) 
-        self.abelha = Abelha(self.grupo_de_desenho, 300, 150, self.personagem)  # Passa Hello Kitty como alvo
+        self.tiktik = Tiktik(self.grupo_de_desenho, 700, 700) # 200 429
+        self.abelha = Abelha(self.grupo_de_desenho, 1, 1, self.personagem) # 300 150
         self.torta = TortaDeMaca(self.grupo_de_desenho,830,200 )
 
         # Plataformas do mapa
@@ -33,7 +33,7 @@ class Jogo:
         fonte = pygame.font.Font(None, 74)
         texto = fonte.render("Você Perdeu", True, (255, 0, 0))
         self.display.fill((0, 0, 0))
-        self.display.blit(texto, (400, 300))
+        self.display.blit(texto, (350, 300))
         pygame.display.update()
         pygame.time.delay(3000)  # Espera 3 segundos antes de encerrar
         pygame.quit()

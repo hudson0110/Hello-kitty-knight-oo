@@ -4,7 +4,7 @@ class TortaDeMaca(pygame.sprite.Sprite):
     def __init__(self, grupo_de_desenho, x_inicial, y_inicial):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/torta_de_maca.png")  # Imagem da torta de maçã
-        self.__rect = pygame.Rect(x_inicial, y_inicial, 40, 40)  # Tamanho da torta de maçã
+        self.__rect = pygame.Rect(x_inicial, y_inicial, 80, 40)  # Tamanho da torta de maçã
 
     #gets
 
