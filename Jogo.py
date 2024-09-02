@@ -47,6 +47,11 @@ class Jogo:
         # Verifica colisão com Abelha
         if pygame.sprite.collide_rect(self.personagem, self.abelha):
             self.jogo_em_andamento = False
+
+        if pygame.sprite.collide_rect(self.personagem, self.torta):
+            self.personagem.pulo_duplo_disponivel = True
+            # Remover a torta do jogo (opcional)
+            self.torta.kill()
             
         # Verifica colisão com qualquer projetil
         for projetil in self.grupo_de_desenho:

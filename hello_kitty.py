@@ -18,11 +18,19 @@ class HelloKitty(pygame.sprite.Sprite):
         self.__velocidade = 0.3
         self.__grupo_de_desenho = grupo_de_desenho
 
+        self.__pulo_duplo_disponivel = False
+        self.usou = False
+        self.comeu = False
+
         #gets
 
     @property
     def image(self):
         return self.__image
+    
+    @property
+    def pulo_duplo_disponivel(self):
+        return self.__pulo_duplo_disponivel
     
     @property
     def rect(self):
@@ -60,6 +68,11 @@ class HelloKitty(pygame.sprite.Sprite):
         return self.__grupo_de_desenho
     
     #sets
+
+    @pulo_duplo_disponivel.setter
+    def pulo_duplo_disponivel(self,valor):
+        self.__pulo_duplo_disponivel = valor
+        self.comeu = valor
 
     @image.setter
     def image(self,valor):
@@ -115,7 +128,6 @@ class HelloKitty(pygame.sprite.Sprite):
     def mover(self, plataformas):
         keys = pygame.key.get_pressed()
         tempo_atual = pygame.time.get_ticks()
-        
         # Movimentação horizontal
         if keys[pygame.K_a] and self.pos_x > 0:  # Limite à esquerda
             self.pos_x -= self.velocidade
@@ -127,10 +139,16 @@ class HelloKitty(pygame.sprite.Sprite):
             if self.no_chao and (tempo_atual - self.tempo_ultimo_pulo > self.intervalo_pulo):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
-                self.pulo_duplo_disponivel = True
                 self.tempo_ultimo_pulo = tempo_atual
-           
+                self.usou = True
+                print("1")
+            if self.pulo_duplo_disponivel and not self.no_chao and  self.usou and (tempo_atual - self.tempo_ultimo_pulo > (self.intervalo_pulo - 200)):
                 self.vel_y = self.pulo_forca
+                self.no_chao = False
+                self.tempo_ultimo_pulo = tempo_atual
+                self.usou = False
+                print("2")
+
 
 
         # Aplicar gravidade
@@ -147,18 +165,15 @@ class HelloKitty(pygame.sprite.Sprite):
                     self.pos_y = plataforma.rect.top - self.rect.height
                     self.vel_y = 0
                     self.no_chao = True
-                    self.pulo_duplo_disponivel = False
+                    if(self.comeu): self.pulo_duplo_disponivel = True #tava false
 
         # Verificar se o personagem está no chão (fundo do mapa)
         if self.pos_y >= 552:
             self.pos_y = 552
             self.vel_y = 0
             self.no_chao = True
-            self.pulo_duplo_disponivel = False
+            #self.pulo_duplo_disponivel = False #tava false
 
-        # Atirar
-        if keys[pygame.K_2] and self.pode_atirar:
-            self.atirar()
 
         # Atualiza a posição do retângulo do personagem
         self.rect.x = int(self.pos_x)
