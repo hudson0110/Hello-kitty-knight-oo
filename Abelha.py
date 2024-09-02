@@ -102,7 +102,7 @@ class Abelha(pygame.sprite.Sprite):
         # Verifica se é hora de atirar
         tempo_atual = pygame.time.get_ticks()
         if tempo_atual - self.tempo_ultimo_tiro > self.intervalo_tiro:
-            #self.atirar()
+            self.atirar()
             self.tempo_ultimo_tiro = tempo_atual
 
     def atirar(self):

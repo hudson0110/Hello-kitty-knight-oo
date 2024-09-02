@@ -133,14 +133,13 @@ class HelloKitty(pygame.sprite.Sprite):
             self.pos_x -= self.velocidade
         if keys[pygame.K_d] and self.pos_x < 1000 - self.rect.width:  # Limite à direita
             self.pos_x += self.velocidade
-        
         # Pulo
         if keys[pygame.K_SPACE]:
             if self.no_chao and (tempo_atual - self.tempo_ultimo_pulo > self.intervalo_pulo):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
                 self.tempo_ultimo_pulo = tempo_atual
-                self.usou = True
+                if(self.comeu): self.usou = True
                 print("1")
             if self.pulo_duplo_disponivel and not self.no_chao and  self.usou and (tempo_atual - self.tempo_ultimo_pulo > (self.intervalo_pulo - 200)):
                 self.vel_y = self.pulo_forca
@@ -165,7 +164,8 @@ class HelloKitty(pygame.sprite.Sprite):
                     self.pos_y = plataforma.rect.top - self.rect.height
                     self.vel_y = 0
                     self.no_chao = True
-                    if(self.comeu): self.pulo_duplo_disponivel = True #tava false
+                    if(self.comeu): 
+                        self.pulo_duplo_disponivel = True #tava false
 
         # Verificar se o personagem está no chão (fundo do mapa)
         if self.pos_y >= 552:

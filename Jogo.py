@@ -22,7 +22,7 @@ class Jogo:
         # Criação dos objetos
         self.mapa = Mapa(self.grupo_de_desenho)
         self.personagem = HelloKitty(self.grupo_de_desenho)
-        self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429)
+        self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429) 
         self.abelha = Abelha(self.grupo_de_desenho, 300, 150, self.personagem)  # Passa Hello Kitty como alvo
         self.torta = TortaDeMaca(self.grupo_de_desenho,830,200 )
 
