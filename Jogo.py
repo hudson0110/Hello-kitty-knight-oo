@@ -4,6 +4,7 @@ from Tiktik import Tiktik
 from Abelha import Abelha
 from mapa import Mapa
 from projetil import Projetil
+from TortaDeMaca import TortaDeMaca
 
 class Jogo:
     def __init__(self):
@@ -23,6 +24,7 @@ class Jogo:
         self.personagem = HelloKitty(self.grupo_de_desenho)
         self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429)
         self.abelha = Abelha(self.grupo_de_desenho, 300, 150, self.personagem)  # Passa Hello Kitty como alvo
+        self.torta = TortaDeMaca(self.grupo_de_desenho,830,200 )
 
         # Plataformas do mapa
         self.plataformas = self.mapa.plataformas
