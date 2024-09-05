@@ -26,6 +26,7 @@ class HelloKitty(pygame.sprite.Sprite):
         self.comeu = False
         self.carregar = False
         self.salvou_uma_vez = False
+        self.pulo_song = pygame.mixer.Sound("Audio/pop.ogg")
 
         # gets
 
@@ -146,8 +147,12 @@ class HelloKitty(pygame.sprite.Sprite):
                 return json.load(arquivo)
         except FileNotFoundError:
             # Se o arquivo não for encontrado, retorna uma posição padrão
-
-            return {'x': 0, 'y': 0}
+            print("Não há arquivo de save")
+            return {'x': 52, 'y': 552}
+        except json.JSONDecodeError:
+            # Se houver um erro ao decodificar o JSON, retorna uma posição padrão
+            print("Erro ao decodificar o arquivo de save")
+            return {'x': 52, 'y': 552}
 
     def mover(self, plataformas):
         keys = pygame.key.get_pressed()
@@ -180,7 +185,9 @@ class HelloKitty(pygame.sprite.Sprite):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
                 print(self.pos_x, self.pos_y)
-
+                self.pulo_song.play()
+                
+                
                 self.tempo_ultimo_pulo = tempo_atual
                 if (self.comeu):
                     self.usou = True
@@ -190,6 +197,8 @@ class HelloKitty(pygame.sprite.Sprite):
                 self.no_chao = False
                 self.tempo_ultimo_pulo = tempo_atual
                 self.usou = False
+                self.pulo_song.play()
+               
                 print("2")
 
         # Aplicar gravidade

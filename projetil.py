@@ -6,14 +6,14 @@ class Projetil(pygame.sprite.Sprite):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/tiro.png")
         self.__rect = pygame.Rect(x_inicial, y_inicial, 15, 15)
-        self.__velocidade = 1
+        self.__velocidade = 0.9
 
         # Calcula a direção do projétil em relação ao alvo (Hello Kitty)
         direcao_x = alvo.rect.centerx - x_inicial
         direcao_y = alvo.rect.centery - y_inicial
         distancia = math.hypot(direcao_x, direcao_y)
-        self.__vel_x = (direcao_x / distancia) * self.velocidade
-        self.__vel_y = (direcao_y / distancia) * self.velocidade
+        self.__vel_x = (direcao_x / distancia) / self.velocidade
+        self.__vel_y = (direcao_y  / distancia) / self.velocidade
 
     #gets
 
@@ -64,8 +64,8 @@ class Projetil(pygame.sprite.Sprite):
 
     def update(self):
         # Move o projétil
-        self.rect.x += self.vel_x
-        self.rect.y += self.vel_y
+        self.rect.x += (self.vel_x )
+        self.rect.y += (self.vel_y )
 
         # Se o projétil sair da tela, destruí-lo
         if self.rect.right < 0 or self.rect.left > 1000 or self.rect.bottom < 0 or self.rect.top > 700:

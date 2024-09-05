@@ -10,8 +10,8 @@ class Menu(pygame.sprite.Sprite):
     def draw(self, display):        
         fonte = pygame.font.Font(None, 36)
         header = fonte.render("Hello Kitty Knight", True, (255, 255, 255))
-        texto = fonte.render("Pressine Enter para começar", True, (255, 255, 255))
-        save = fonte.render("(S) para saves", True, (255, 255, 255))
+        texto = fonte.render("Enter para novo jogo", True, (255, 255, 255))
+        save = fonte.render("(S) para continuar", True, (255, 255, 255))
         display.blit(header, (350, 150))  # Posição e texto
         display.blit(texto, (320, 300))  # Posição e texto
         display.blit(save, (450, 450))  # Posição e texto
