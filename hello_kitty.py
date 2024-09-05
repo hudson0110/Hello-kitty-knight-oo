@@ -178,4 +178,3 @@ class HelloKitty(pygame.sprite.Sprite):
         # Atualiza a posição do retângulo do personagem
         self.rect.x = int(self.pos_x)
         self.rect.y = int(self.pos_y)
-

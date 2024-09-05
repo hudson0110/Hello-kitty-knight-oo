@@ -1,10 +1,13 @@
 import pygame
+
 from hello_kitty import HelloKitty
 from Tiktik import Tiktik
+from menu import Menu
 from Abelha import Abelha
 from mapa import Mapa
 from projetil import Projetil
 from TortaDeMaca import TortaDeMaca
+
 
 class Jogo:
     def __init__(self):
@@ -18,12 +21,14 @@ class Jogo:
 
         # Grupo de desenhos
         self.grupo_de_desenho = pygame.sprite.Group()
+        self.menu = pygame.sprite.Group()
 
         # Criação dos objetos
+        self.menu = Menu(self.menu)
         self.mapa = Mapa(self.grupo_de_desenho)
         self.personagem = HelloKitty(self.grupo_de_desenho)
-        self.tiktik = Tiktik(self.grupo_de_desenho, 700, 700) # 200 429
-        self.abelha = Abelha(self.grupo_de_desenho, 1, 1, self.personagem) # 300 150
+        self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429) # 200 429
+        self.abelha = Abelha(self.grupo_de_desenho, 300, 150, self.personagem) # 300 150
         self.torta = TortaDeMaca(self.grupo_de_desenho,830,200 )
 
         # Plataformas do mapa
@@ -31,7 +36,7 @@ class Jogo:
 
     def exibir_tela_perdeu(self):
         fonte = pygame.font.Font(None, 74)
-        texto = fonte.render("Você Perdeu", True, (255, 0, 0))
+        texto = fonte.render("se fudeu", True, (255, 0, 0))
         self.display.fill((0, 0, 0))
         self.display.blit(texto, (350, 300))
         pygame.display.update()
@@ -40,18 +45,28 @@ class Jogo:
         exit()
 
     def verificar_colisoes(self):
-        # Verifica colisão com Tiktik
-        if pygame.sprite.collide_rect(self.personagem, self.tiktik):
-            self.jogo_em_andamento = False
-            
-        # Verifica colisão com Abelha
-        if pygame.sprite.collide_rect(self.personagem, self.abelha):
-            self.jogo_em_andamento = False
+
 
         if pygame.sprite.collide_rect(self.personagem, self.torta):
             self.personagem.pulo_duplo_disponivel = True
             # Remover a torta do jogo (opcional)
             self.torta.kill()
+
+        # Verifica colisão com Tiktik
+        if pygame.sprite.collide_rect(self.personagem, self.tiktik):
+            if self.personagem.comeu :
+                self.tiktik.kill()
+            else:
+                self.jogo_em_andamento = False
+
+            
+        # Verifica colisão com Abelha
+        if pygame.sprite.collide_rect(self.personagem, self.abelha):
+            if self.personagem.comeu :
+                self.abelha.kill()
+                self.abelha.vivo = False
+            else:
+                self.jogo_em_andamento = False    
             
         # Verifica colisão com qualquer projetil
         for projetil in self.grupo_de_desenho:
@@ -59,21 +74,40 @@ class Jogo:
                 self.jogo_em_andamento = False
 
     def executar(self):
+        no_menu = False
+        em_jogo = False
+        keys = pygame.key.get_pressed()
+
         while self.Gameloop:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     self.Gameloop = False
 
             if self.jogo_em_andamento:
-                self.personagem.mover(self.plataformas)
-                self.tiktik.mover_tiktik()
-                self.abelha.mover_abelha()
-                
-                self.verificar_colisoes()
+                self.menu.update()
 
-                self.grupo_de_desenho.update()  # Atualiza todos os sprites no grupo
+                if(not em_jogo):
+                    no_menu = self.menu.interage_menu()
+                    if(no_menu):
+                        em_jogo = True
+                
                 self.display.fill((0, 0, 0))
-                self.grupo_de_desenho.draw(self.display)
+                
+
+                if(no_menu):
+                    self.personagem.mover(self.plataformas)
+                    self.tiktik.mover_tiktik()
+                    self.abelha.mover_abelha()
+                    
+                    self.verificar_colisoes()
+
+                    self.grupo_de_desenho.update()  # Atualiza todos os sprites no grupo
+
+
+                if(no_menu):
+                    self.grupo_de_desenho.draw(self.display)
+                else:
+                    self.menu.draw(self.display)
                 pygame.display.update()
             else:
                 self.exibir_tela_perdeu()

@@ -9,10 +9,13 @@ class Abelha(pygame.sprite.Sprite):
         self.__pos_x = float(x_inicial)  # Posição em ponto flutuante para precisão
         self.__direcao = 1
         self.__velocidade = 0.4
+
+        
         self.__grupo_de_desenho = grupo_de_desenho
         self.__alvo = alvo
         self.__tempo_ultimo_tiro = 1
         self.__intervalo_tiro = 2000  # Atira a cada 2000ms (2 segundos)
+        self.vivo = True
 
     #gets
 
@@ -102,9 +105,11 @@ class Abelha(pygame.sprite.Sprite):
         # Verifica se é hora de atirar
         tempo_atual = pygame.time.get_ticks()
         if tempo_atual - self.tempo_ultimo_tiro > self.intervalo_tiro:
-            self.atirar()
-            self.tempo_ultimo_tiro = tempo_atual
+            if self.vivo:
+                self.atirar()
+                self.tempo_ultimo_tiro = tempo_atual
 
     def atirar(self):
         # Cria um novo projétil e adiciona ao grupo de desenho
-        projetil = Projetil(self.grupo_de_desenho, self.rect.centerx, self.rect.centery, self.alvo)
+        
+            projetil = Projetil(self.grupo_de_desenho, self.rect.centerx, self.rect.centery, self.alvo)
