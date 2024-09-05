@@ -1,17 +1,20 @@
 import pygame
+import json
+
 
 class HelloKitty(pygame.sprite.Sprite):
-    def __init__(self, grupo_de_desenho):
+    def __init__(self, grupo_de_desenho, Ipos_x, Ipos_y):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/Personagem.png")
-        self.__rect = pygame.Rect(50, 552, 20, 67)  # Posição inicial do personagem no chão (y = 552)
-        
+        # Posição inicial do personagem no chão (y = 552)
+        self.__rect = pygame.Rect(50, 552, 20, 67)
+
         # Variáveis de movimento
-        self.__pos_x = 50.0
-        self.__pos_y = 552.0
-        self.__vel_y = 0   
+        self.__pos_x = Ipos_x
+        self.__pos_y = Ipos_y
+        self.__vel_y = 0
         self.__gravidade = 0.004
-        self.__pulo_forca = -1.2 
+        self.__pulo_forca = -1.2
         self.__no_chao = True
         self.__tempo_ultimo_pulo = 0
         self.__intervalo_pulo = 500  # Intervalo de 500ms entre pulos
@@ -21,17 +24,19 @@ class HelloKitty(pygame.sprite.Sprite):
         self.__pulo_duplo_disponivel = False
         self.usou = False
         self.comeu = False
+        self.carregar = False
+        self.salvou_uma_vez = False
 
-        #gets
+        # gets
 
     @property
     def image(self):
         return self.__image
-    
+
     @property
     def pulo_duplo_disponivel(self):
         return self.__pulo_duplo_disponivel
-    
+
     @property
     def rect(self):
         return self.__rect
@@ -39,95 +44,131 @@ class HelloKitty(pygame.sprite.Sprite):
     @property
     def pos_x(self):
         return self.__pos_x
-    @property 
+
+    @property
     def pos_y(self):
         return self.__pos_y
-    @property 
+
+    @property
     def vel_y(self):
         return self.__vel_y
+
     @property
     def gravidade(self):
         return self.__gravidade
-    @property 
+
+    @property
     def pulo_forca(self):
         return self.__pulo_forca
-    @property 
+
+    @property
     def no_chao(self):
         return self.__no_chao
+
     @property
     def tempo_ultimo_pulo(self):
         return self.__tempo_ultimo_pulo
+
     @property
     def intervalo_pulo(self):
         return self.__intervalo_pulo
+
     @property
     def velocidade(self):
         return self.__velocidade
+
     @property
     def grupo_de_desenho(self):
         return self.__grupo_de_desenho
-    
-    #sets
+
+    # sets
 
     @pulo_duplo_disponivel.setter
-    def pulo_duplo_disponivel(self,valor):
+    def pulo_duplo_disponivel(self, valor):
         self.__pulo_duplo_disponivel = valor
         self.comeu = valor
 
     @image.setter
-    def image(self,valor):
+    def image(self, valor):
         self.__image = valor
 
     @rect.setter
-    def rect(self,valor):
+    def rect(self, valor):
         self.__rect = valor
-    
+
     @pos_x.setter
-    def pos_x(self,valor):
+    def pos_x(self, valor):
         self.__pos_x = valor
 
     @pos_y.setter
-    def pos_y(self,valor):
+    def pos_y(self, valor):
         self.__pos_y = valor
 
     @vel_y.setter
-    def vel_y(self,valor):
+    def vel_y(self, valor):
         self.__vel_y = valor
-    
+
     @gravidade.setter
-    def gravidade(self,valor):
+    def gravidade(self, valor):
         self.__gravidade = valor
 
     @pulo_forca.setter
-    def pulo_forca(self,valor):
+    def pulo_forca(self, valor):
         self.__pulo_forca = valor
 
     @no_chao.setter
-    def no_chao(self,valor):
+    def no_chao(self, valor):
         self.__no_chao = valor
 
     @tempo_ultimo_pulo.setter
-    def tempo_ultimo_pulo(self,valor):
+    def tempo_ultimo_pulo(self, valor):
         self.__tempo_ultimo_pulo = valor
 
     @intervalo_pulo.setter
-    def intervalo_pulo(self,valor):
+    def intervalo_pulo(self, valor):
         self.__intervalo_pulo = valor
 
     @velocidade.setter
-    def velocidade(self,valor):
+    def velocidade(self, valor):
         self.__velocidade = valor
 
     @grupo_de_desenho.setter
-    def grupo_de_desenho(self,valor):
+    def grupo_de_desenho(self, valor):
         self.__grupo_de_desenho = valor
 
+    def salvar_posicao(self, personagem_posicao):
+        with open('save.json', 'w') as arquivo:
+            json.dump(personagem_posicao, arquivo)
 
+    def carregar_posicao(self):
+        try:
+            with open('save.json', 'r') as arquivo:
+                return json.load(arquivo)
+        except FileNotFoundError:
+            # Se o arquivo não for encontrado, retorna uma posição padrão
 
+            return {'x': 0, 'y': 0}
 
     def mover(self, plataformas):
         keys = pygame.key.get_pressed()
         tempo_atual = pygame.time.get_ticks()
+        if not self.carregar:
+            posicao = self.carregar_posicao()
+            self.pos_x = posicao['x']
+            self.pos_y = posicao['y']
+
+            # Atualizar o rect para refletir a nova posição carregada
+            self.rect.x = int(self.pos_x)
+            # Certifique-se de atualizar rect.y também
+            self.rect.y = int(self.pos_y)
+            print(f"Posição carregada: X={self.pos_x}, Y={self.pos_y}")
+            self.carregar = True
+        if (self.comeu and not self.salvou_uma_vez):
+            # Posição atual do personagem
+            posicao_atual = {'x': self.pos_x, 'y': self.pos_y}
+            self.salvar_posicao(posicao_atual)
+            self.salvou_uma_vez = True
+
         # Movimentação horizontal
         if keys[pygame.K_a] and self.pos_x > 0:  # Limite à esquerda
             self.pos_x -= self.velocidade
@@ -138,17 +179,18 @@ class HelloKitty(pygame.sprite.Sprite):
             if self.no_chao and (tempo_atual - self.tempo_ultimo_pulo > self.intervalo_pulo):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
+                print(self.pos_x, self.pos_y)
+
                 self.tempo_ultimo_pulo = tempo_atual
-                if(self.comeu): self.usou = True
+                if (self.comeu):
+                    self.usou = True
                 print("1")
-            if self.pulo_duplo_disponivel and not self.no_chao and  self.usou and (tempo_atual - self.tempo_ultimo_pulo > (self.intervalo_pulo - 200)):
+            if self.pulo_duplo_disponivel and not self.no_chao and self.usou and (tempo_atual - self.tempo_ultimo_pulo > (self.intervalo_pulo - 200)):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
                 self.tempo_ultimo_pulo = tempo_atual
                 self.usou = False
                 print("2")
-
-
 
         # Aplicar gravidade
         self.vel_y += self.gravidade
@@ -164,16 +206,15 @@ class HelloKitty(pygame.sprite.Sprite):
                     self.pos_y = plataforma.rect.top - self.rect.height
                     self.vel_y = 0
                     self.no_chao = True
-                    if(self.comeu): 
-                        self.pulo_duplo_disponivel = True #tava false
+                    if (self.comeu):
+                        self.pulo_duplo_disponivel = True  # tava false
 
         # Verificar se o personagem está no chão (fundo do mapa)
-        if self.pos_y >= 552:
-            self.pos_y = 552
-            self.vel_y = 0
-            self.no_chao = True
-            #self.pulo_duplo_disponivel = False #tava false
-
+        # if self.pos_y >= 552:
+            # self.pos_y = 552
+            # self.vel_y = 0
+            # self.no_chao = True
+            # self.pulo_duplo_disponivel = False #tava false
 
         # Atualiza a posição do retângulo do personagem
         self.rect.x = int(self.pos_x)

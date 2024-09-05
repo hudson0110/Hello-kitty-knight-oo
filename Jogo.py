@@ -26,7 +26,7 @@ class Jogo:
         # Criação dos objetos
         self.menu = Menu(self.menu)
         self.mapa = Mapa(self.grupo_de_desenho)
-        self.personagem = HelloKitty(self.grupo_de_desenho)
+        self.personagem = HelloKitty(self.grupo_de_desenho, 50,552)
         self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429) # 200 429
         self.abelha = Abelha(self.grupo_de_desenho, 300, 150, self.personagem) # 300 150
         self.torta = TortaDeMaca(self.grupo_de_desenho,830,200 )
@@ -76,7 +76,6 @@ class Jogo:
     def executar(self):
         no_menu = False
         em_jogo = False
-        keys = pygame.key.get_pressed()
 
         while self.Gameloop:
             for evento in pygame.event.get():
@@ -87,23 +86,20 @@ class Jogo:
                 self.menu.update()
 
                 if(not em_jogo):
-                    no_menu = self.menu.interage_menu()
+                    
+
+                    no_menu = self.menu.inicia_jogo()
                     if(no_menu):
                         em_jogo = True
-                
+               
                 self.display.fill((0, 0, 0))
-                
-
                 if(no_menu):
+                    #self.personagem.carregarPosicao()
                     self.personagem.mover(self.plataformas)
                     self.tiktik.mover_tiktik()
-                    self.abelha.mover_abelha()
-                    
+                    self.abelha.mover_abelha()                   
                     self.verificar_colisoes()
-
                     self.grupo_de_desenho.update()  # Atualiza todos os sprites no grupo
-
-
                 if(no_menu):
                     self.grupo_de_desenho.draw(self.display)
                 else:
