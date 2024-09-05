@@ -6,6 +6,7 @@ class TortaDeMaca(pygame.sprite.Sprite):
         self.__image = pygame.image.load("Imagens/torta_de_maca.png")  # Imagem da torta de maçã
         self.__rect = pygame.Rect(x_inicial, y_inicial, 80, 40)  # Tamanho da torta de maçã
 
+
     #gets
 
     @property
@@ -25,3 +26,6 @@ class TortaDeMaca(pygame.sprite.Sprite):
     @rect.setter
     def rect(self,valor):
         self.__rect = valor
+
+
+    

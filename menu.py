@@ -21,13 +21,13 @@ class Menu(pygame.sprite.Sprite):
     def inicia_jogo(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN] :
-            print("nolas")
+            #print("teste")
             return True
         
     def inicia_saves(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_s] :
-            print("nolas")
+            #print("teste")
             return True 
     
 

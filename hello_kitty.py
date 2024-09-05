@@ -1,8 +1,8 @@
 import pygame
-import json
+from Save import saves
 
 
-class HelloKitty(pygame.sprite.Sprite):
+class HelloKitty(pygame.sprite.Sprite,saves):
     def __init__(self, grupo_de_desenho, Ipos_x, Ipos_y):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/Personagem.png")
@@ -137,22 +137,6 @@ class HelloKitty(pygame.sprite.Sprite):
     def grupo_de_desenho(self, valor):
         self.__grupo_de_desenho = valor
 
-    def salvar_posicao(self, personagem_posicao):
-        with open('save.json', 'w') as arquivo:
-            json.dump(personagem_posicao, arquivo)
-
-    def carregar_posicao(self):
-        try:
-            with open('save.json', 'r') as arquivo:
-                return json.load(arquivo)
-        except FileNotFoundError:
-            # Se o arquivo não for encontrado, retorna uma posição padrão
-            print("Não há arquivo de save")
-            return {'x': 52, 'y': 552}
-        except json.JSONDecodeError:
-            # Se houver um erro ao decodificar o JSON, retorna uma posição padrão
-            print("Erro ao decodificar o arquivo de save")
-            return {'x': 52, 'y': 552}
 
     def mover(self, plataformas):
         keys = pygame.key.get_pressed()

@@ -35,8 +35,7 @@ class Jogo:
         self.mapa = Mapa(self.grupo_de_desenho)
         self.personagem = HelloKitty(self.grupo_de_desenho, 50, 552)
         self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429)  # 200 429
-        self.abelha = Abelha(self.grupo_de_desenho, 300,
-                             150, self.personagem)  # 300 150
+        self.abelha = Abelha(self.grupo_de_desenho, 300,150, self.personagem)  # 300 150
         self.torta = TortaDeMaca(self.grupo_de_desenho, 830, 200)
 
         # Plataformas do mapa
@@ -46,7 +45,6 @@ class Jogo:
         if self.vitoria == 2:
             fonte = pygame.font.Font(None, 150)
             texto = fonte.render("Venceu", True, (0, 255, 0))
-            # self.display.fill((0, 0, 0))
             self.display.blit(texto, (330, 100))
             pygame.display.update()
             pygame.time.delay(3000)  # Espera 3 segundos antes de encerrar
@@ -54,11 +52,9 @@ class Jogo:
             exit()
         else:
             fonte = pygame.font.Font(None, 74)
-            texto = fonte.render("se fudeu", True, (255, 0, 0))
-            #rei = fonte.render("Precione R para Reiniciar", True, (255, 0, 0))
+            texto = fonte.render("pressione (F5) pra recomeçar", True, (255, 0, 0))
             self.display.fill((0, 0, 0))
             self.display.blit(texto, (350, 300))
-            #self.display.blit(rei, (150, 400))
             pygame.display.update()
             pygame.time.delay(3000)  # Espera 3 segundos antes de encerrar
             pygame.quit()
@@ -91,8 +87,6 @@ class Jogo:
                 if not self.flip:
                     self.vitoria += 1
                     self.flip = True
-
-                print(self.vitoria)
             else:
                 self.jogo_em_andamento = False
 
