@@ -8,8 +8,25 @@ class Inimigo(pygame.sprite.Sprite):
         self.__direcao = 1  # 1 para direita, -1 para esquerda
         self.__velocidade = velocidade  # Velocidade do inimigo
         self.__grupo_de_desenho = grupo_de_desenho
-        self.limite_esquerdo = limite_esquerdo
-        self.limite_direito = limite_direito
+        self.__limite_esquerdo = limite_esquerdo
+        self.__limite_direito = limite_direito
+
+    @property
+    def limite_esquerdo(self):
+        return self.__limite_esquerdo
+
+    @limite_esquerdo.setter
+    def limite_esquerdo(self, value):
+        self.__limite_esquerdo = value
+
+    @property
+    def limite_direito(self):
+        return self.__limite_direito
+
+    @limite_direito.setter
+    def limite_direito(self, value):
+        self.__limite_direito = value
+
 
     # Gets
 

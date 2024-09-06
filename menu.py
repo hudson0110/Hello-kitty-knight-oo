@@ -4,7 +4,16 @@ from Plataforma import Plataforma  # Importe a classe Plataforma
 class Menu(pygame.sprite.Sprite):
     def __init__(self, menu):
         super().__init__(menu)
-        self.menu = True
+        self.__menu = True
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @menu.setter
+    def menu(self, value):
+        self.__menu = value
+
         
 
     def draw(self, display):        

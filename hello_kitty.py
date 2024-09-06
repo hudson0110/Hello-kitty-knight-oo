@@ -20,13 +20,55 @@ class HelloKitty(pygame.sprite.Sprite,saves):
         self.__intervalo_pulo = 500  # Intervalo de 500ms entre pulos
         self.__velocidade = 0.3
         self.__grupo_de_desenho = grupo_de_desenho
+        pygame.display.set_caption("Hello Kitty Knight")
 
         self.__pulo_duplo_disponivel = False
-        self.usou = False
-        self.comeu = False
-        self.carregar = False
-        self.salvou_uma_vez = False
-        self.pulo_song = pygame.mixer.Sound("Audio/pop.ogg")
+        self.__usou = False
+        self.__comeu = False
+        self.__carregar = False
+        self.__salvou_uma_vez = False
+        self.__pulo_song = pygame.mixer.Sound("Audio/pop.ogg")
+
+    @property
+    def usou(self):
+        return self.__usou
+
+    @usou.setter
+    def usou(self, value):
+        self.__usou = value
+
+    @property
+    def comeu(self):
+        return self.__comeu
+
+    @comeu.setter
+    def comeu(self, value):
+        self.__comeu = value
+
+    @property
+    def carregar(self):
+        return self.__carregar
+
+    @carregar.setter
+    def carregar(self, value):
+        self.__carregar = value
+
+    @property
+    def salvou_uma_vez(self):
+        return self.__salvou_uma_vez
+
+    @salvou_uma_vez.setter
+    def salvou_uma_vez(self, value):
+        self.__salvou_uma_vez = value
+
+    @property
+    def pulo_song(self):
+        return self.__pulo_song
+
+    @pulo_song.setter
+    def pulo_song(self, value):
+        self.__pulo_song = value
+
 
         # gets
 

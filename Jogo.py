@@ -13,33 +13,165 @@ import os
 class Jogo:
     def __init__(self):
         pygame.init()
-        self.vitoria = 0
-        self.flip = False
-        self.flip2 = False
-        self.Gameloop = True
-        self.jogo_em_andamento = True
-        self.novo_jogo = False
+        self.__vitoria = 0
+        self.__flip = False
+        self.__flip2 = False
+        self.__Gameloop = True
+        self.__jogo_em_andamento = True
+        self.__novo_jogo = False
+        self.__morte = pygame.mixer.Sound("Audio/morte.mp3")
+        self.__display = pygame.display.set_mode([1000, 700])
+        self.__grupo_de_desenho = pygame.sprite.Group()
+        self.__menu = pygame.sprite.Group()
+        self.__menu = Menu(self.__menu)
+        self.__mapa = Mapa(self.__grupo_de_desenho)
+        self.__personagem = HelloKitty(self.__grupo_de_desenho, 50, 552)
+        self.__tiktik = Tiktik(self.__grupo_de_desenho, 200, 429)  # 200 429
+        self.__abelha = Abelha(self.__grupo_de_desenho, 300,150, self.__personagem)  # 300 150
+        self.__torta = TortaDeMaca(self.__grupo_de_desenho, 830, 200)
+        self.__plataformas = self.__mapa.plataformas
 
-        # self.ataque = pygame.mixer.Sound("Audio/ataque.mp3")
-        # self.morte = pygame.mixer.Sound("Audio/morri.mp3")
-        # Display
-        self.display = pygame.display.set_mode([1000, 700])
-        pygame.display.set_caption("Hello Kitty Knight")
+    @property
+    def morte(self):
+        return self.__morte
 
-        # Grupo de desenhos
-        self.grupo_de_desenho = pygame.sprite.Group()
-        self.menu = pygame.sprite.Group()
+    @morte.setter
+    def morte(self, value):
+        self.__morte = value
 
-        # Criação dos objetos
-        self.menu = Menu(self.menu)
-        self.mapa = Mapa(self.grupo_de_desenho)
-        self.personagem = HelloKitty(self.grupo_de_desenho, 50, 552)
-        self.tiktik = Tiktik(self.grupo_de_desenho, 200, 429)  # 200 429
-        self.abelha = Abelha(self.grupo_de_desenho, 300,150, self.personagem)  # 300 150
-        self.torta = TortaDeMaca(self.grupo_de_desenho, 830, 200)
+    @property
+    def display(self):
+        return self.__display
 
-        # Plataformas do mapa
-        self.plataformas = self.mapa.plataformas
+    @display.setter
+    def display(self, value):
+        self.__display = value
+
+    @property
+    def grupo_de_desenho(self):
+        return self.__grupo_de_desenho
+
+    @grupo_de_desenho.setter
+    def grupo_de_desenho(self, value):
+        self.__grupo_de_desenho = value
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @menu.setter
+    def menu(self, value):
+        self.__menu = value
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @menu.setter
+    def menu(self, value):
+        self.__menu = value
+
+    @property
+    def mapa(self):
+        return self.__mapa
+
+    @mapa.setter
+    def mapa(self, value):
+        self.__mapa = value
+
+    @property
+    def personagem(self):
+        return self.__personagem
+
+    @personagem.setter
+    def personagem(self, value):
+        self.__personagem = value
+
+    @property
+    def tiktik(self):
+        return self.__tiktik
+
+    @tiktik.setter
+    def tiktik(self, value):
+        self.__tiktik = value
+
+    @property
+    def abelha(self):
+        return self.__abelha
+
+    @abelha.setter
+    def abelha(self, value):
+        self.__abelha = value
+
+    @property
+    def torta(self):
+        return self.__torta
+
+    @torta.setter
+    def torta(self, value):
+        self.__torta = value
+
+    @property
+    def plataformas(self):
+        return self.__plataformas
+
+    @plataformas.setter
+    def plataformas(self, value):
+        self.__plataformas = value
+
+
+
+
+
+    @property
+    def vitoria(self):
+        return self.__vitoria
+
+    @vitoria.setter
+    def vitoria(self, value):
+        self.__vitoria = value
+
+    @property
+    def flip(self):
+        return self.__flip
+
+    @flip.setter
+    def flip(self, value):
+        self.__flip = value
+
+    @property
+    def flip2(self):
+        return self.__flip2
+
+    @flip2.setter
+    def flip2(self, value):
+        self.__flip2 = value
+
+    @property
+    def Gameloop(self):
+        return self.__Gameloop
+
+    @Gameloop.setter
+    def Gameloop(self, value):
+        self.__Gameloop = value
+
+    @property
+    def jogo_em_andamento(self):
+        return self.__jogo_em_andamento
+
+    @jogo_em_andamento.setter
+    def jogo_em_andamento(self, value):
+        self.__jogo_em_andamento = value
+
+    @property
+    def novo_jogo(self):
+        return self.__novo_jogo
+
+    @novo_jogo.setter
+    def novo_jogo(self, value):
+        self.__novo_jogo = value
+
+
 
     def exibir_tela_perdeu(self):
         if self.vitoria == 2:
@@ -51,6 +183,7 @@ class Jogo:
             pygame.quit()
             exit()
         else:
+            self.morte.play()
             fonte = pygame.font.Font(None, 74)
             texto = fonte.render("Perdeu KK", True, (255, 0, 0))
             self.display.fill((0, 0, 0))
@@ -71,7 +204,6 @@ class Jogo:
         if pygame.sprite.collide_rect(self.personagem, self.tiktik):
             if self.personagem.comeu:
                 self.tiktik.kill()
-                # self.morte.play()
                 if not self.flip2:
                     self.vitoria += 1
                     self.flip2 = True
