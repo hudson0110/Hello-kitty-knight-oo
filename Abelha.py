@@ -9,13 +9,17 @@ class Abelha(Inimigo):
         self.__alvo = alvo
         self.__tempo_ultimo_tiro = 1
         self.__intervalo_tiro = 2000  # Atira a cada 2000ms (2 segundos)
-        self.vivo = True
+        self.__vivo = True
 
     # Gets e Sets da Abelha
 
     @property
     def image(self):
         return self.__image
+    
+    @property
+    def vivo(self):
+        return self.__vivo
 
     @property
     def alvo(self):
@@ -33,6 +37,10 @@ class Abelha(Inimigo):
     def image(self, valor):
         self.__image = valor
 
+    @vivo.setter
+    def vivo(self, valor):
+        self.__vivo = valor
+
     @alvo.setter
     def alvo(self, valor):
         self.__alvo = valor
@@ -46,13 +54,15 @@ class Abelha(Inimigo):
         self.__intervalo_tiro = valor
 
     def mover(self):
-        # Sobrescrevendo o método mover para o comportamento específico da Abelha
+                                        # Sobrescrevendo o método mover para o comportamento específico da Abelha
         super().mover()  # Chama o movimento genérico da classe pai
-        print("Abelha movida")
+        #print("Abelha movida")
         # Abelha pode também atirar
         tempo_atual = pygame.time.get_ticks()
         if tempo_atual - self.tempo_ultimo_tiro > self.intervalo_tiro:
-            self.atirar()
+            if self.vivo:
+                self.atirar()
+                self.tempo_ultimo_tiro = tempo_atual
 
     def atirar(self):
         # Cria um novo projétil e adiciona ao grupo de desenho

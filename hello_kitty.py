@@ -168,14 +168,12 @@ class HelloKitty(pygame.sprite.Sprite,saves):
             if self.no_chao and (tempo_atual - self.tempo_ultimo_pulo > self.intervalo_pulo):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
-                print(self.pos_x, self.pos_y)
                 self.pulo_song.play()
                 
                 
                 self.tempo_ultimo_pulo = tempo_atual
                 if (self.comeu):
                     self.usou = True
-                print("1")
             if self.pulo_duplo_disponivel and not self.no_chao and self.usou and (tempo_atual - self.tempo_ultimo_pulo > (self.intervalo_pulo - 200)):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
@@ -183,7 +181,6 @@ class HelloKitty(pygame.sprite.Sprite,saves):
                 self.usou = False
                 self.pulo_song.play()
                
-                print("2")
 
         # Aplicar gravidade
         self.vel_y += self.gravidade
@@ -201,13 +198,6 @@ class HelloKitty(pygame.sprite.Sprite,saves):
                     self.no_chao = True
                     if (self.comeu):
                         self.pulo_duplo_disponivel = True  # tava false
-
-        # Verificar se o personagem está no chão (fundo do mapa)
-        # if self.pos_y >= 552:
-            # self.pos_y = 552
-            # self.vel_y = 0
-            # self.no_chao = True
-            # self.pulo_duplo_disponivel = False #tava false
 
         # Atualiza a posição do retângulo do personagem
         self.rect.x = int(self.pos_x)

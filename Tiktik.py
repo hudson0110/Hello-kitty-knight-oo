@@ -18,4 +18,4 @@ class Tiktik(Inimigo):
 
     def mover(self):        
         super().mover()  
-        print("Tiktik movida")
+        #print("Tiktik movida")

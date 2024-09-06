@@ -28,4 +28,5 @@ class TortaDeMaca(pygame.sprite.Sprite):
         self.__rect = valor
 
 
-    
+    def upgrade():
+        return False

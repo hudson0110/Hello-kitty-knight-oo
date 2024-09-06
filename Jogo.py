@@ -52,7 +52,7 @@ class Jogo:
             exit()
         else:
             fonte = pygame.font.Font(None, 74)
-            texto = fonte.render("pressione (F5) pra recomeçar", True, (255, 0, 0))
+            texto = fonte.render("Perdeu KK", True, (255, 0, 0))
             self.display.fill((0, 0, 0))
             self.display.blit(texto, (350, 300))
             pygame.display.update()
@@ -130,8 +130,8 @@ class Jogo:
                     if self.vitoria == 2:
                         self.jogo_em_andamento = False
                     self.personagem.mover(self.plataformas)
-                    self.tiktik.mover_tiktik()
-                    self.abelha.mover_abelha()                   
+                    self.tiktik.mover()
+                    self.abelha.mover()                   
                     self.verificar_colisoes()
                     self.grupo_de_desenho.update()  # Atualiza todos os sprites no grupo
                 if(no_menu):
