@@ -7,9 +7,7 @@ class HelloKitty(pygame.sprite.Sprite,saves):
         super().__init__(grupo_de_desenho)
         self.__image = pygame.image.load("Imagens/Personagem.png")
         # Posição inicial do personagem no chão (y = 552)
-        self.__rect = pygame.Rect(50, 552, 20, 67)
-
-        # Variáveis de movimento
+        self.__rect = pygame.Rect(50, 552, 20, 67)  
         self.__pos_x = Ipos_x
         self.__pos_y = Ipos_y
         self.__vel_y = 0
@@ -20,14 +18,13 @@ class HelloKitty(pygame.sprite.Sprite,saves):
         self.__intervalo_pulo = 500  # Intervalo de 500ms entre pulos
         self.__velocidade = 0.3
         self.__grupo_de_desenho = grupo_de_desenho
-        pygame.display.set_caption("Hello Kitty Knight")
-
         self.__pulo_duplo_disponivel = False
         self.__usou = False
         self.__comeu = False
         self.__carregar = False
         self.__salvou_uma_vez = False
         self.__pulo_song = pygame.mixer.Sound("Audio/pop.ogg")
+        pygame.display.set_caption("Hello Kitty Knight")
 
     @property
     def usou(self):
@@ -211,7 +208,6 @@ class HelloKitty(pygame.sprite.Sprite,saves):
                 self.vel_y = self.pulo_forca
                 self.no_chao = False
                 self.pulo_song.play()
-                
                 
                 self.tempo_ultimo_pulo = tempo_atual
                 if (self.comeu):

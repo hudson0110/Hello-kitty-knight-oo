@@ -1,5 +1,4 @@
 import pygame
-from Plataforma import Plataforma  # Importe a classe Plataforma
 
 class Menu(pygame.sprite.Sprite):
     def __init__(self, menu):
