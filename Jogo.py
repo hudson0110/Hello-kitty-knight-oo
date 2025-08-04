@@ -4,7 +4,7 @@ from hello_kitty import HelloKitty
 from Tiktik import Tiktik
 from menu import Menu
 from Abelha import Abelha
-from mapa import Mapa
+from Mapa import Mapa
 from projetil import Projetil
 from TortaDeMaca import TortaDeMaca
 import os

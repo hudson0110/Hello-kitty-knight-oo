@@ -1,5 +1,5 @@
 import pygame
-from Save import saves
+from save import saves
 
 
 class HelloKitty(pygame.sprite.Sprite,saves):
